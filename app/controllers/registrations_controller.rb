@@ -1,13 +1,12 @@
 class RegistrationsController < ApplicationController
 
   def create 
-    binding.pry
     user = User.create!(user_params)
     if user
       session[:user_id] = user.id
       render json: {status: :created, user: user}
     else
-      render json: {status: 500}
+      render json: {status: 500, message: user.errors.full_messages}
     end
   end
 
